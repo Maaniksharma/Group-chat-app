@@ -8,7 +8,6 @@ import { validate } from '../api/validate';
 
 const LoginPage = () => {
   const { isPopupOpen, popupInfo, ShowPopup, closePopup } = usePopup();
-  // const { cartCountGet } = useCart();
   const [isLoading, setIsLoading] = useState(false);
   const userContext = useAuth();
   const navigate = useNavigate();
@@ -55,8 +54,8 @@ const LoginPage = () => {
       </div>
       {isPopupOpen && (
         <Popup
-          title={popupInfo.current.Title}
-          message={popupInfo.current.Text}
+          title={popupInfo.Title}
+          message={popupInfo.Text}
           onClose={closePopup}
         />
       )}

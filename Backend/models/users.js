@@ -1,4 +1,29 @@
 import mongoose from 'mongoose';
+const InvitationSchema = new mongoose.Schema({
+  groupId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'groups',
+    required: true,
+  },
+  groupName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  invitedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'groupchatusers',
+    required: true,
+  },
+  accepted: {
+    type: Boolean,
+    default: false,
+  },
+  at: {
+    type: Date,
+    default: Date.now,
+  },
+});
 const users = new mongoose.Schema(
   {
     userName: {
@@ -37,6 +62,7 @@ const users = new mongoose.Schema(
         ref: 'groups',
       },
     ],
+    invitations: [InvitationSchema],
   },
   {
     timestamps: true,

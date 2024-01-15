@@ -1,5 +1,6 @@
 import Mailgun from '../../mailgun.js';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import users from '../../models/users.js';
 
 export default async (req, res) => {
@@ -13,11 +14,12 @@ export default async (req, res) => {
       return res.send({ error: 0 });
     } else {
       try {
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds, you can adjust this value
         const user = new users({
           userName: username,
           email: email,
           region: region,
-          password: password,
+          password: hashedPassword,
           isVerified: false,
         });
         await user.save();

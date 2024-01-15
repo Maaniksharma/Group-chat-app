@@ -13,7 +13,7 @@ export default async (req, res) => {
     } else {
       const groupDetails = await groups
         .find({ _id: { $in: userGroups.groups } })
-        .select({ name: 1, messages: { $slice: -1 } });
+        .select({ groupName: 1, messages: { $slice: -1 } });
 
       // Destructure the messages array into a message object
       const groupDetailsWithMessage = groupDetails.map((group) => ({

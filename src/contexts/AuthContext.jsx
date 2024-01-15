@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
     JSON.parse(localStorage.getItem('user')) || {}
   );
   const [groups, setGroups] = useState([] || localStorage.getItem('groups'));
+  const [groupData, setGroupData] = useState({});
 
   const login = (res) => {
     setIsAuthenticated(true);
@@ -23,6 +24,7 @@ export function AuthProvider({ children }) {
     setUser({});
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('groups');
   };
 
   const updateUser = (user) => {
@@ -47,16 +49,39 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const addGroup = async (groupName) => {
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVERURL}/user/creategroup`,
+      {
+        method: 'POST',
+        headers: {
+          authorization: localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ groupName }),
+      }
+    );
+    const data = await res.json();
+    const group = data.group;
+    const newGroups = [...groups, group];
+    setGroups(newGroups);
+    localStorage.setItem('groups', JSON.stringify(newGroups));
+    return data.message;
+  };
+
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
         groups,
+        groupData,
         login,
         logout,
         updateUser,
         fetchGroups,
+        addGroup,
+        setGroupData,
       }}
     >
       {children}

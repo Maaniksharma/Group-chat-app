@@ -1,15 +1,28 @@
 import mongoose from 'mongoose';
 import users from './models/users.js';
+import bcrypt from 'bcrypt';
 
-async function addGroupsField() {
-  const result = await users.updateMany(
-    { groups: { $exists: false } },
-    { $set: { groups: [] } }
+async function hashAllUserPasswords() {
+  await mongoose.connect(
+    'mongodb+srv://manik:manik@cluster0.1sfxvx1.mongodb.net/gchatapp'
   );
 
-  console.log(`Updated ${result.nModified} documents`);
+  // Fetch all users
+  const allUsers = await users.find({});
+
+  // Iterate over each user
+  for (let user of allUsers) {
+    // Hash the user's password
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
+    // Update the user's password
+    user.password = hashedPassword;
+
+    // Save the user back to the database
+    await user.save();
+  }
 
   await mongoose.disconnect();
 }
 
-addGroupsField().catch(console.error);
+hashAllUserPasswords().catch(console.error);

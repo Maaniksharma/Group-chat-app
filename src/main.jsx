@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/Signup';
 import VerifyEmail from './pages/VerifyEmail';
 import HomePage from './pages/Homepage';
+import { ToastProvider } from './contexts/ToastContext';
+import GroupChat from './pages/GroupChat';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,14 +26,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/verifyemail" element={<VerifyEmail />} />
-            <Route path="*" element={<div>404</div>} />
-          </Routes>
+          <ToastProvider>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/verifyemail" element={<VerifyEmail />} />
+              <Route path="/groupchat" element={<GroupChat />} />
+              <Route path="*" element={<div>404</div>} />
+            </Routes>
+          </ToastProvider>
         </AuthProvider>
       </QueryClientProvider>
     </BrowserRouter>

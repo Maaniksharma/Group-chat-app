@@ -56,8 +56,8 @@ const SignupPage = () => {
       <SignupForm isLoading={isLoading} onSubmit={onSubmit} />
       {isPopupOpen && (
         <Popup
-          title={popupInfo.current.Title}
-          message={popupInfo.current.Text}
+          title={popupInfo.Title}
+          message={popupInfo.Text}
           onClose={closePopup}
         />
       )}

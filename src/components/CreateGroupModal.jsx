@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import Modal from 'react-modal';
 
@@ -11,6 +12,7 @@ const CreateGroupModal = ({ isOpen, onRequestClose, onCreateGroup }) => {
 
   return (
     <Modal
+      // ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       className="m-auto p-4 w-1/2 bg-white rounded shadow"
@@ -25,7 +27,7 @@ const CreateGroupModal = ({ isOpen, onRequestClose, onCreateGroup }) => {
       />
       <button
         onClick={handleCreateGroup}
-        className="bg-blue-500 text-white p-2 rounded w-full"
+        className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded w-full"
       >
         Create
       </button>

@@ -1,17 +1,19 @@
 // usePopup.js
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 const usePopup = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const popupInfo = useRef({ Title: '', Text: '' });
+  const [popupInfo, setPopupinfo] = useState({ Title: '', Text: '' });
 
   const ShowPopup = (title, text) => {
-    popupInfo.current.Title = title;
-    popupInfo.current.Text = text;
+    console.log('come here1 ');
+    console.log(title, text);
+    setPopupinfo({ Title: title, Text: text });
     setIsPopupOpen(true);
   };
 
   const closePopup = () => {
+    console.log('come here');
     setIsPopupOpen(false);
   };
 
