@@ -3,10 +3,6 @@ import users from './models/users.js';
 import bcrypt from 'bcrypt';
 
 async function hashAllUserPasswords() {
-  await mongoose.connect(
-    'mongodb+srv://manik:manik@cluster0.1sfxvx1.mongodb.net/gchatapp'
-  );
-
   // Fetch all users
   const allUsers = await users.find({});
 
