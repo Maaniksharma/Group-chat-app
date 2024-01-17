@@ -11,6 +11,8 @@ import VerifyEmail from './pages/VerifyEmail';
 import HomePage from './pages/Homepage';
 import { ToastProvider } from './contexts/ToastContext';
 import GroupChat from './pages/GroupChat';
+import SendInvitations from './pages/SendInvitations';
+import Invitations from './pages/Invitations';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +36,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/verifyemail" element={<VerifyEmail />} />
               <Route path="/groupchat" element={<GroupChat />} />
+              <Route path="/sendinvitations" element={<SendInvitations />} />
+              <Route path="/invitations" element={<Invitations />} />
               <Route path="*" element={<div>404</div>} />
             </Routes>
           </ToastProvider>

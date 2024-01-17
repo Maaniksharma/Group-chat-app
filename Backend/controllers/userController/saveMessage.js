@@ -18,18 +18,17 @@ export default async (id, data) => {
     };
 
     // Add the message to the group's messages
-    group.messages.push(newMessage);
+    group.messages.unshift(newMessage);
 
     // Save the group
     await group.save();
 
     // If the group is saved successfully, emit the last message to all clients
-    const lastMessage = group.messages[group.messages.length - 1];
-    const user = await users.findById(lastMessage.userId).select('userName');
+    const user = await users.findById(id).select('userName');
     const messageData = {
       senderName: user.userName, // Replace this with the actual sender's name
-      timestamp: lastMessage.at,
-      message: lastMessage.message,
+      at: newMessage.at,
+      message: newMessage.message,
     };
     return messageData;
   } catch (err) {

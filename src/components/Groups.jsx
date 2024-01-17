@@ -4,15 +4,19 @@ import PageLoader from './PageLoader';
 import GroupsUI from './GroupsUi';
 
 const Groups = () => {
-  const { groups, fetchGroups } = useAuth();
+  const { groups, fetchGroups, fetchInvitations } = useAuth();
   const [hasFetchedGroups, setHasFetchedGroups] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const fetchInitialData = async () => {
+    setIsLoading(true);
+    await fetchInvitations();
+    await fetchGroups();
+    setIsLoading(false);
+  };
   useEffect(() => {
     if (!hasFetchedGroups) {
-      setIsLoading(true);
-      fetchGroups();
+      fetchInitialData();
       setHasFetchedGroups(true);
-      setIsLoading(false);
     }
   }, [hasFetchedGroups]);
   if (isLoading) return <PageLoader />;

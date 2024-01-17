@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Groups from '../components/Groups';
 import BlueButton from '../components/BlueButton';
 import CreateGroupModal from '../components/CreateGroupModal';
 import { useAuth } from '../hooks/useAuth';
 import useToast from '../hooks/useToast';
+
 const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { addGroup } = useAuth();
+  const { addGroup, invitationsCount } = useAuth();
   const showToast = useToast();
   const handleCreateGroup = async (groupName) => {
     const message = await addGroup(groupName);
@@ -17,6 +19,7 @@ const HomePage = () => {
     }
     setIsModalOpen(false);
   };
+  const navigate = useNavigate();
 
   return (
     <>
@@ -29,8 +32,8 @@ const HomePage = () => {
               handler={() => setIsModalOpen(true)}
             />
             <BlueButton
-              text={`Invitations`}
-              handler={() => setIsModalOpen(true)}
+              text={`Invitations ${invitationsCount}`}
+              handler={() => navigate('/invitations')}
             />
           </div>
         </header>

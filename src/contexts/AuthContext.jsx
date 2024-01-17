@@ -11,6 +11,10 @@ export function AuthProvider({ children }) {
   );
   const [groups, setGroups] = useState([] || localStorage.getItem('groups'));
   const [groupData, setGroupData] = useState({});
+  const [invitations, setInvitations] = useState(
+    [] || localStorage.getItem('invitations')
+  );
+  const [invitationsCount, setInvitationsCount] = useState(0);
 
   const login = (res) => {
     setIsAuthenticated(true);
@@ -22,6 +26,8 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setIsAuthenticated(false);
     setUser({});
+    setGroups([]);
+    setGroupData({});
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('groups');
@@ -46,6 +52,26 @@ export function AuthProvider({ children }) {
     } else {
       setGroups(data.groups);
       localStorage.setItem('groups', JSON.stringify(data.groups));
+    }
+  };
+
+  const fetchInvitations = async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVERURL}/user/invitations`,
+      {
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    if (data.error) {
+      console.log(data.err);
+    } else {
+      setInvitations(data.invitations);
+      setInvitationsCount(data.invitations.length);
+      localStorage.setItem('invitations', JSON.stringify(data.invitations));
     }
   };
 
@@ -76,11 +102,14 @@ export function AuthProvider({ children }) {
         user,
         groups,
         groupData,
+        invitations,
+        invitationsCount,
         login,
         logout,
         updateUser,
         fetchGroups,
         addGroup,
+        fetchInvitations,
         setGroupData,
       }}
     >

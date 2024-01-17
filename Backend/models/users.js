@@ -5,11 +5,6 @@ const InvitationSchema = new mongoose.Schema({
     ref: 'groups',
     required: true,
   },
-  groupName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
   invitedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'groupchatusers',

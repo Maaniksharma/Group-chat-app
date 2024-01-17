@@ -2,7 +2,6 @@ import users from '../../models/users.js';
 import groups from '../../models/groups.js'; // replace with the path to your groups model
 
 export default async (req, res) => {
-  console.log('comehere');
   const userId = req.id;
 
   try {
