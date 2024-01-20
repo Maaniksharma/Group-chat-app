@@ -7,7 +7,6 @@ const SendInvitations = () => {
   const ShowToast = useToast();
   const [searchedUsers, setSearchedUsers] = useState([]);
   const { groupData, user } = useAuth();
-  console.log(user);
   const onSearch = async (searchTerm) => {
     const response = await fetch(
       `${

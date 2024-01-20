@@ -30,7 +30,6 @@ const GroupChat = () => {
     setLoading(true);
     let response = await fetchMessages(groupData._id, 1);
     response = response.reverse();
-    console.log(response);
     setMessages(response);
     messagesRef.current = response;
     localStorage.setItem(`${groupData._id}`, JSON.stringify(response));
@@ -38,7 +37,6 @@ const GroupChat = () => {
     setIsInitiallyFetched(true);
   };
   useEffect(() => {
-    console.log('data useEffect');
     if (!isInitiallyfetched) return;
     const temp = data.reverse();
     setMessages((prev) => [...temp, ...prev]);

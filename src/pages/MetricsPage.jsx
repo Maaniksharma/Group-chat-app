@@ -41,7 +41,6 @@ const MetricsPage = () => {
       return;
     }
     const data = await response.json();
-    console.log(data);
     setMetricsData(data.metrics);
     setLoading(false);
   };

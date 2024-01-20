@@ -22,7 +22,6 @@ const Invitations = () => {
       }
     );
     res = await res.json();
-    console.log(res);
     setInvitationsData(res.invitationsDetails);
     setLoading(false);
   };

@@ -1,8 +1,5 @@
 import { useAuth } from '../hooks/useAuth';
 const fetchMessages = async (groupId, page) => {
-  // console.log(messages);
-  console.log('come here');
-  console.log(groupId, page);
   return await fetch(
     `${
       import.meta.env.VITE_SERVERURL

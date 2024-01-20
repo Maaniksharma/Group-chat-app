@@ -7,7 +7,6 @@ const useInfiniteScroll = (fetchData, id) => {
   const [isDataEnd, setIsDataEnd] = useState(false);
   const TopElementRef = useRef(null);
   const addData = async () => {
-    console.log('come here');
     if (isDataEnd) return;
     setLoading(true);
     const response = await fetchData(id, page);
@@ -16,8 +15,6 @@ const useInfiniteScroll = (fetchData, id) => {
       setIsDataEnd(true);
       return;
     }
-    console.log(response);
-    console.log('data fetched');
     setData(response);
     setLoading(false);
     setPage((prevPage) => prevPage + 1);
