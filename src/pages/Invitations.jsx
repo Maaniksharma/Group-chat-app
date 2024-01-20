@@ -60,16 +60,22 @@ const Invitations = () => {
       <h1 className="text-3xl font-bold mb-4 text-blue-500 text-center mt-4">
         Invitations
       </h1>
-      <div className="w-full max-w-md flex flex-wrap items-center gap-4">
-        {invitationsData.map((invitation, index) => (
-          <Invitation
-            key={index}
-            {...invitation}
-            onClickJoin={onClickJoin}
-            className="mb-4"
-          />
-        ))}
-      </div>
+      {invitationsData.length === 0 ? (
+        <p className="text-center mt-20 text-gray-800 font-semibold text-2xl">
+          No invitations. You are not that popular.
+        </p>
+      ) : (
+        <div className="w-full max-w-md flex flex-wrap items-center gap-4">
+          {invitationsData.map((invitation, index) => (
+            <Invitation
+              key={index}
+              {...invitation}
+              onClickJoin={onClickJoin}
+              className="mb-4"
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

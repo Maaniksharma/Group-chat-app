@@ -6,7 +6,6 @@ const FetchMessagesMain = (groupId) => {
     queryKey: ['messages', groupId],
     queryFn: fetchMessages,
   });
-  console.log(Results);
   const messages = Results?.data;
   return {
     messages,

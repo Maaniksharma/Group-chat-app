@@ -13,6 +13,8 @@ import { ToastProvider } from './contexts/ToastContext';
 import GroupChat from './pages/GroupChat';
 import SendInvitations from './pages/SendInvitations';
 import Invitations from './pages/Invitations';
+import MetricsPage from './pages/MetricsPage';
+import RouteValidator from './api/RouteValidator';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,14 +33,50 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <ToastProvider>
             <Navbar />
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
+              <Route
+                path="/"
+                element={
+                  <RouteValidator>
+                    <HomePage />
+                  </RouteValidator>
+                }
+              />
+              <Route
+                path="/groupchat"
+                element={
+                  <RouteValidator>
+                    <GroupChat />
+                  </RouteValidator>
+                }
+              />
+              <Route
+                path="/sendinvitations"
+                element={
+                  <RouteValidator>
+                    <SendInvitations />
+                  </RouteValidator>
+                }
+              />
+              <Route
+                path="/invitations"
+                element={
+                  <RouteValidator>
+                    <Invitations />
+                  </RouteValidator>
+                }
+              />
+              <Route
+                path="/metrics"
+                element={
+                  <RouteValidator>
+                    <MetricsPage />
+                  </RouteValidator>
+                }
+              />
               <Route path="/verifyemail" element={<VerifyEmail />} />
-              <Route path="/groupchat" element={<GroupChat />} />
-              <Route path="/sendinvitations" element={<SendInvitations />} />
-              <Route path="/invitations" element={<Invitations />} />
               <Route path="*" element={<div>404</div>} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
             </Routes>
           </ToastProvider>
         </AuthProvider>

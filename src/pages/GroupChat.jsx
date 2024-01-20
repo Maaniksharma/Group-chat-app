@@ -6,23 +6,27 @@ import ChatMessage from '../components/ChatMessage';
 import PageLoader from '../components/PageLoader';
 import { socket } from '../socket';
 import { useAuth } from '../hooks/useAuth';
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
 import fetchMessages from '../api/fetchMessages';
-import Shimmers from '../components/Shimmers';
+// import Shimmers from '../components/Shimmers';
 const GroupChat = () => {
   const { groupData } = useAuth();
   const localStorageMessages = JSON.parse(
     localStorage.getItem(`${groupData._id}`)
   );
-  const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState(localStorageMessages || []);
   const messagesRef = useRef(localStorageMessages);
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
-  const [page, setPage] = useState(1);
+  const [isInitiallyfetched, setIsInitiallyFetched] = useState(false);
   const [showShimmers, setShowShimmers] = useState(false);
-  const observer = useRef();
-  const topRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const { dataLoading, data, TopElementRef } = useInfiniteScroll(
+    fetchMessages,
+    groupData._id
+  );
   const initMessages = async () => {
+    if (!groupData) return;
     setLoading(true);
     let response = await fetchMessages(groupData._id, 1);
     response = response.reverse();
@@ -31,39 +35,27 @@ const GroupChat = () => {
     messagesRef.current = response;
     localStorage.setItem(`${groupData._id}`, JSON.stringify(response));
     setLoading(false);
+    setIsInitiallyFetched(true);
   };
-  const AddMessages = async () => {
-    console.log('add messages');
-    const nextPage = page + 1;
-    setPage(nextPage);
-    const res = await fetchMessages(groupData._id, nextPage);
-    setMessages((prev) => [...res, ...prev]);
-    messagesRef.current = [...res, ...messagesRef.current];
+  useEffect(() => {
+    console.log('data useEffect');
+    if (!isInitiallyfetched) return;
+    const temp = data.reverse();
+    setMessages((prev) => [...temp, ...prev]);
+    messagesRef.current = [...temp, ...messagesRef.current];
     localStorage.setItem(
       `${groupData._id}`,
       JSON.stringify(messagesRef.current)
     );
-  };
+    window.document.scrollTop = window.scrollHeight;
+  }, [data]);
+
   useEffect(() => {
     if (!localStorageMessages) {
       initMessages();
     }
+    scrollToBottom();
   }, []);
-  useEffect(() => {
-    const currentObserver = observer.current;
-    if (currentObserver) currentObserver.disconnect();
-
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setShowShimmers(true);
-        AddMessages();
-      }
-    });
-
-    if (topRef.current) observer.current.observe(topRef.current);
-
-    return () => observer.current.disconnect();
-  }, [page]);
 
   useEffect(() => {
     socket.connect('connect', () => {
@@ -85,8 +77,9 @@ const GroupChat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]); // Add messages as a dependency
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   const handleSendMessage = (message) => {
     console.log('emitted');
@@ -110,8 +103,8 @@ const GroupChat = () => {
           <div className="fas fa-user-plus cursor-pointer" />
         </Link>
       </div>
-      <div className="flex-grow overflow-y-auto ">
-        <div ref={topRef} />
+      <div className="flex-grow overflow-y-auto">
+        <div ref={TopElementRef} className="h-10" />
         {/* {showShimmers && <Shimmers />} */}
         {messages.map((item, index) => (
           <ChatMessage

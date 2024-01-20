@@ -6,7 +6,8 @@ import { useAuth } from '../hooks/useAuth';
 const SendInvitations = () => {
   const ShowToast = useToast();
   const [searchedUsers, setSearchedUsers] = useState([]);
-  const { groupData } = useAuth();
+  const { groupData, user } = useAuth();
+  console.log(user);
   const onSearch = async (searchTerm) => {
     const response = await fetch(
       `${
@@ -26,6 +27,10 @@ const SendInvitations = () => {
     setSearchedUsers(res);
   };
   const onSendInvite = async (id) => {
+    if (user.id === id) {
+      ShowToast('You cannot invite yourself');
+      return;
+    }
     console.log('Invite sent');
     const response = await fetch(
       `${import.meta.env.VITE_SERVERURL}/user/sendinvite`,
@@ -48,7 +53,6 @@ const SendInvitations = () => {
       return;
     }
     ShowToast('Invite sent Successfully');
-    console.log(res);
   };
   return (
     <div className="">

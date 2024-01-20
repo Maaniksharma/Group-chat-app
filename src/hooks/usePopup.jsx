@@ -6,14 +6,11 @@ const usePopup = () => {
   const [popupInfo, setPopupinfo] = useState({ Title: '', Text: '' });
 
   const ShowPopup = (title, text) => {
-    console.log('come here1 ');
-    console.log(title, text);
     setPopupinfo({ Title: title, Text: text });
     setIsPopupOpen(true);
   };
 
   const closePopup = () => {
-    console.log('come here');
     setIsPopupOpen(false);
   };
 

@@ -9,7 +9,7 @@ export default async (req, res) => {
       message: `${userName} has joined the group`,
       userId: userId,
     };
-    group.messages.push(message);
+    group.messages.unshift(message);
     group.members.push(userId);
     await group.save();
     const user = await users.findById(userId);

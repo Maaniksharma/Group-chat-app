@@ -5,11 +5,14 @@ export default async (id, data) => {
   try {
     const group = await groups.findById(data.groupId);
 
+    console.log(id, data);
     if (!group) {
       console.log('Group not found');
       return;
     }
-
+    if (!group.members.includes(id)) {
+      throw new Error('User is not a member of the group');
+    }
     // Create a new message
     const newMessage = {
       userId: id,

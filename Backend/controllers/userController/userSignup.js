@@ -14,15 +14,15 @@ export default async (req, res) => {
       return res.send({ error: 0 });
     } else {
       try {
-        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds, you can adjust this value
-        const user = new users({
-          userName: username,
-          email: email,
-          region: region,
-          password: hashedPassword,
-          isVerified: false,
-        });
-        await user.save();
+        // const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds, you can adjust this value
+        // const user = new users({
+        //   userName: username,
+        //   email: email,
+        //   region: region,
+        //   password: hashedPassword,
+        //   isVerified: false,
+        // });
+        // await user.save();
       } catch (error) {
         console.error('Error occurred during insertion:', error);
         res.status(500).send({ error: 'Server error' });

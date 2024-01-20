@@ -32,8 +32,12 @@ const HomePage = () => {
               handler={() => setIsModalOpen(true)}
             />
             <BlueButton
-              text={`Invitations ${invitationsCount}`}
+              text={`Invitations (${invitationsCount})`}
               handler={() => navigate('/invitations')}
+            />
+            <BlueButton
+              text={`Show Metrics`}
+              handler={() => navigate('/metrics')}
             />
           </div>
         </header>

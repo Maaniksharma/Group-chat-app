@@ -28,9 +28,7 @@ export function AuthProvider({ children }) {
     setUser({});
     setGroups([]);
     setGroupData({});
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('groups');
+    localStorage.clear();
   };
 
   const updateUser = (user) => {

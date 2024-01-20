@@ -12,8 +12,8 @@ export default async (req, res) => {
     } else {
       const groupDetails = await groups
         .find({ _id: { $in: userGroups.groups } })
-        .select({ groupName: 1, messages: { $slice: -1 } });
-
+        .select({ groupName: 1, messages: { $slice: 1 } })
+        .sort({ 'messages.at': -1 }); // Sort by the 'at' field of the most recent message in descending order
       // Destructure the messages array into a message object
       const groupDetailsWithMessage = groupDetails.map((group) => ({
         ...group._doc,

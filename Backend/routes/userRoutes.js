@@ -11,6 +11,7 @@ import sendInvite from '../Controllers/userController/sendInvite.js';
 import fetchInvitations from '../Controllers/userController/fetchInvitations.js';
 import fetchInvitationsDetails from '../Controllers/userController/fetchInvitationDetails.js';
 import joinGroup from '../Controllers/userController/joinGroup.js';
+import fetchMetrics from '../Controllers/userController/fetchMetrics.js';
 // import EditUser from '../Controllers/userController/EditUser.js';
 
 const router = express.Router();
@@ -26,6 +27,7 @@ router.post('/sendinvite', authenticateUser, sendInvite);
 router.get('/invitations', authenticateUser, fetchInvitations);
 router.post('/invitationsdetails', authenticateUser, fetchInvitationsDetails);
 router.post('/joingroup', authenticateUser, joinGroup);
+router.get('/metrics', authenticateUser, fetchMetrics);
 
 // router.post('/edituser', authenticateUser, EditUser);
 

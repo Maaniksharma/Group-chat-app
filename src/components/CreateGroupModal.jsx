@@ -12,7 +12,7 @@ const CreateGroupModal = ({ isOpen, onRequestClose, onCreateGroup }) => {
 
   return (
     <Modal
-      // ariaHideApp={false}
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       className="m-auto p-4 w-1/2 bg-white rounded shadow"

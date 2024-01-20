@@ -1,30 +1,41 @@
-import formData from 'form-data';
-import Mailgun from 'mailgun.js';
+// import mailjet from 'node-mailjet';
+import Mailjet from 'node-mailjet';
 import dotenv from 'dotenv';
 import process from 'process';
 
 dotenv.config();
-const mailgun = new Mailgun(formData);
-const mg = mailgun.client({
-  username: 'api',
-  key: process.env.MAILGUN_API_KEY || 'key-yourkeyhere',
+const mailjet = new Mailjet({
+  apiKey: process.env.MAILJET_API_KEY,
+  apiSecret: process.env.MAILJET_SECRET_KEY,
 });
+
 export default (email, Link, title, callback) => {
-  mg.messages
-    .create('sandbox8d932839ddb14f478f5e5900775c1099.mailgun.org', {
-      from: 'Apni Dukkan manikss123456@gmail.com',
-      to: [email],
-      subject: title,
-      html: `<h1>${title}</h1>
-              <p>Click on the link below</p>
-              <a href=${Link}>Click Here</a>`,
+  const request = mailjet.post('send', { version: 'v3.1' }).request({
+    Messages: [
+      {
+        From: {
+          Email: 'manikss123456@gmail.com',
+          Name: 'Chat Karo',
+        },
+        To: [
+          {
+            Email: `${email}`,
+            Name: 'passenger 1',
+          },
+        ],
+        Subject: 'Verify Your Account',
+        TextPart: 'Dear Customer Welcome to Chat Karo ',
+        HTMLPart: `<h3>Click on this Link <a href='${Link}'>Mailjet</a>!</h3><br />May the delivery force be with you!`,
+      },
+    ],
+  });
+  request
+    .then((result) => {
+      console.log(result.body);
+      callback(null, result.body);
     })
-    .then((msg) => {
-      console.log(msg);
-      callback(null, msg);
-    }) // logs response data
     .catch((err) => {
-      console.log(err);
+      console.log(err.statusCode);
       callback(err, null);
-    }); // logs any error
+    });
 };
