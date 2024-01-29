@@ -26,61 +26,61 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <ToastProvider>
-            <Navbar />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <RouteValidator>
-                    <HomePage />
-                  </RouteValidator>
-                }
-              />
-              <Route
-                path="/groupchat"
-                element={
-                  <RouteValidator>
-                    <GroupChat />
-                  </RouteValidator>
-                }
-              />
-              <Route
-                path="/sendinvitations"
-                element={
-                  <RouteValidator>
-                    <SendInvitations />
-                  </RouteValidator>
-                }
-              />
-              <Route
-                path="/invitations"
-                element={
-                  <RouteValidator>
-                    <Invitations />
-                  </RouteValidator>
-                }
-              />
-              <Route
-                path="/metrics"
-                element={
-                  <RouteValidator>
-                    <MetricsPage />
-                  </RouteValidator>
-                }
-              />
-              <Route path="/verifyemail" element={<VerifyEmail />} />
-              <Route path="*" element={<div>404</div>} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Routes>
-          </ToastProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ToastProvider>
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <RouteValidator>
+                  <HomePage />
+                </RouteValidator>
+              }
+            />
+            <Route
+              path="/groupchat"
+              element={
+                <RouteValidator>
+                  <GroupChat />
+                </RouteValidator>
+              }
+            />
+            <Route
+              path="/sendinvitations"
+              element={
+                <RouteValidator>
+                  <SendInvitations />
+                </RouteValidator>
+              }
+            />
+            <Route
+              path="/invitations"
+              element={
+                <RouteValidator>
+                  <Invitations />
+                </RouteValidator>
+              }
+            />
+            <Route
+              path="/metrics"
+              element={
+                <RouteValidator>
+                  <MetricsPage />
+                </RouteValidator>
+              }
+            />
+            <Route path="/verifyemail" element={<VerifyEmail />} />
+            <Route path="*" element={<div>404</div>} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </ToastProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
+  // </React.StrictMode>
 );

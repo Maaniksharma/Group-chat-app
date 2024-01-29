@@ -15,7 +15,7 @@ const GroupChat = () => {
     localStorage.getItem(`${groupData._id}`)
   );
   const [messages, setMessages] = useState(localStorageMessages || []);
-  const messagesRef = useRef(localStorageMessages);
+  const messagesRef = useRef(localStorageMessages || []);
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
   const [isInitiallyfetched, setIsInitiallyFetched] = useState(false);

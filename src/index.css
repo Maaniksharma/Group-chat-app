@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*{
+scroll-behavior: smooth;
+}
 .loader {
     border: 2px solid #f3f3f3;
     border-radius: 50%;
