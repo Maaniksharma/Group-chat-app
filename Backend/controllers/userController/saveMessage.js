@@ -11,7 +11,8 @@ export default async (id, data) => {
       return;
     }
     if (!group.members.includes(id)) {
-      throw new Error('User is not a member of the group');
+      console.log('user is not member');
+      return;
     }
     // Create a new message
     const newMessage = {
