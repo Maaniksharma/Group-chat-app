@@ -56,17 +56,29 @@ const GroupChat = () => {
   }, []);
 
   useEffect(() => {
-    socket.connect('connect', () => {
+    async function getConnection() {
+      socket.connect('connect');
       console.log('connected to server');
-    });
-    socket.on('message', (incomingMessage) => {
-      console.log(incomingMessage);
-      const updatedMessages = [...messagesRef.current, incomingMessage];
-      messagesRef.current = updatedMessages;
-      setMessages(updatedMessages);
-      localStorage.setItem(`${groupData._id}`, JSON.stringify(updatedMessages));
-    });
-
+      console.log({
+        groupId: groupData._id,
+        token: localStorage.getItem('token'),
+      });
+      socket.emit('join', {
+        groupId: groupData._id,
+        token: localStorage.getItem('token'),
+      });
+      console.log('join request sent');
+      socket.on('message', (incomingMessage) => {
+        const updatedMessages = [...messagesRef.current, incomingMessage];
+        messagesRef.current = updatedMessages;
+        setMessages(updatedMessages);
+        localStorage.setItem(
+          `${groupData._id}`,
+          JSON.stringify(updatedMessages)
+        );
+      });
+    }
+    getConnection();
     return () => {
       socket.disconnect();
     };
@@ -80,7 +92,6 @@ const GroupChat = () => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
   };
   const handleSendMessage = (message) => {
-    console.log('emitted');
     socket.emit('sendMessage', {
       token: localStorage.getItem('token'),
       message,

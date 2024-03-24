@@ -44,13 +44,21 @@ io.on('connection', (socket) => {
         socket.disconnect();
       } else {
         socket.userId = userId;
+        socket.groupId = packet[1].groupId;
         next();
       }
     });
   });
+  socket.on('join', (packet) => {
+    console.log(packet);
+    console.log('Client joining group', packet.groupId);
+    socket.join(packet.groupId);
+    console.log('Client joined group', packet.groupId);
+  });
   socket.on('sendMessage', async (packet) => {
     const messageData = await saveMessage(socket.userId, packet);
-    io.emit('message', messageData);
+    socket.join(socket.groupId);
+    io.to(socket.groupId).emit('message', messageData);
   });
 
   socket.on('disconnect', () => {
